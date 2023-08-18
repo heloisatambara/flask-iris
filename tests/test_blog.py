@@ -19,11 +19,15 @@ def test_index(client, auth):
     '/1/update',
     '/1/delete',
 ))
-def test_login_required(app, client, auth):
+def test_login_required(client, path):
+    response = client.post(path)
+    assert response.headers["Location"] == '/auth/login'
+    
+def test_author_required(app, client, auth):
     # change thepost author to another user
     with app.app_context():
         db = get_db()
-        db.execute('UPDATE psot SET author_id =2 WHERE id = 1')
+        db.execute('UPDATE post SET author_id =2 WHERE id = 1')
         db.commit()
         
     auth.login()
@@ -82,5 +86,5 @@ def test_delete(client, auth, app):
     
     with app.app_context():
         db = get_db()
-        post = db.execute('SELECT * FROM post HWERE id = 1').fetchone()
+        post = db.execute('SELECT * FROM post WHERE id = 1').fetchone()
         assert post is None        

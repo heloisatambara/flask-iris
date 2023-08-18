@@ -14,7 +14,7 @@ def init_db():
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
-    click.echo('Initialied the database.')
+    click.echo('Initialized the database.')
     
 # registers the commands
 def init_app(app):
