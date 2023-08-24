@@ -47,12 +47,13 @@ def login():
         error = None
         
         try:
-            user = db.session.execute(db.select(User).where(username=username)).one()
-        except Exception: # TODO also check this error
+            user = db.one_or_404(db.select(User).filter_by(username=username))
+        except Exception as err: # TODO also check this error
             error = f"User {username} not found."
+            flash(str(err))
             
-        if not check_password_hash(user.password, password):
-            error = "Incorrect password"
+        #if not check_password_hash(user.password, password):
+         #   error = "Incorrect password"
             
         if error is None:
             session.clear()
