@@ -29,8 +29,10 @@ def create_app(test_config=None):
         return "hello world"
     
     # flask initializes Alchemy with this app
-    from .db import db
+    from .database import db
     db.init_app(app)
+    with app.app_context():
+        db.create_all()
     
     from . import auth
     app.register_blueprint(auth.bp)
