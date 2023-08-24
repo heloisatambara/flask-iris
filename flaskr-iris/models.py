@@ -1,6 +1,4 @@
-from .db import get_db
-
-db = get_db()
+from .db import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

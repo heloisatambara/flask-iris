@@ -2,7 +2,7 @@ from flask import (
     Blueprint, request, redirect, url_for, flash, render_template, session
 )
 from werkzeug.security import generate_password_hash, check_password_hash
-from .db import get_db
+from .db import db
 from .models import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -13,7 +13,6 @@ def register():
     if request.method=='POST':
         username = request.form['username']
         password = request.form['password']
-        db = get_db()
         error = None
         
         if not username:
@@ -30,8 +29,8 @@ def register():
                 
                 db.session.add(user)
                 db.session.commit()
-            except Exception: # TODO: change this to sqlite3's db.IntegrityError equivalent
-                error = f"User {username} is already registered."
+            except Exception as err: # TODO: change this to sqlite3's db.IntegrityError equivalent
+                error = str(err)
             else:
                 return redirect(url_for("auth.login"))
         
@@ -45,7 +44,6 @@ def login():
     if request.method=="POST":
         username = request.form['username']
         password = request.form['password']
-        db = get_db()
         error = None
         
         try:
