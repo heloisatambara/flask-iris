@@ -6,8 +6,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev', # override with random when deploy
-    #    DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'), # CHANGE TO IRIS
-        SQLALCHEMY_DATABASE_URI = "iris://_SYSTEM:SYS@localhost:1972/SAMPLE"
+        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'), # CHANGE TO IRIS
     ) 
   
     if test_config is None:
@@ -29,7 +28,7 @@ def create_app(test_config=None):
         return 'Hello, world!'
     
     # import the database created
-    from flaskr.db import db
+    from . import db
     db.init_app(app)
     
     from . import auth
