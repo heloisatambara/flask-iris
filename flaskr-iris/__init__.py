@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from sqlalchemy.exc import DatabaseError
 
 def create_app(test_config=None):
     # create and configure the app
@@ -32,8 +33,11 @@ def create_app(test_config=None):
     from .database import db, engine
     from .models import User
     db.init_app(app)
-    with app.app_context():
-        db.create_all()
+    try:
+        with app.app_context():
+            db.create_all()
+    except DatabaseError:
+        print("Database already exists in the destination")
     
     from . import auth
     app.register_blueprint(auth.bp)
