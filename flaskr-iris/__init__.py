@@ -24,11 +24,6 @@ def create_app(test_config=None):
     except OSError:
         print("instance folder doesn't exist")
     
-    # test if its working
-    @app.route('/')
-    def hello():
-        return "hello world"
-    
     # flask initializes Alchemy with this app
     from .database import db, engine
     from .models import User
@@ -41,5 +36,9 @@ def create_app(test_config=None):
     
     from . import auth
     app.register_blueprint(auth.bp)
+    
+    from . import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index')
     
     return app
