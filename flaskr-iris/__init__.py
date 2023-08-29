@@ -29,9 +29,9 @@ def create_app(test_config=None):
     from .models import User
     db.init_app(app)
     # try:
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
+    # with app.app_context():
+    #     db.drop_all()
+    #     db.create_all()
     # except DatabaseError:
     #     print("Database already exists in the destination")
     
