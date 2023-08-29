@@ -28,14 +28,15 @@ def create_app(test_config=None):
     from .database import db, engine
     from .models import User
     db.init_app(app)
-    try:
-        with app.app_context():
-            db.create_all()
-    except DatabaseError:
-        print("Database already exists in the destination")
+    # try:
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+    # except DatabaseError:
+    #     print("Database already exists in the destination")
     
     from . import auth
-    app.register_blueprint(auth.bp)
+    app.register_blueprint(auth.bp) 
     
     from . import blog
     app.register_blueprint(blog.bp)
