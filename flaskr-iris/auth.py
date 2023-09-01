@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, request, redirect, url_for, flash, render_template, session
+    Blueprint, request, g, redirect, url_for, flash, render_template, session
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 from .database import db
@@ -48,12 +48,12 @@ def login():
         error = None
         
         try:
-            user = db.one_or_404(db.select(User).where(User.username==username)).first()
+            user = db.one_or_404(db.select(User).where(User.username==username))
+            
             if not check_password_hash(user.password, password):
                 error = "Incorrect password"
         except Exception as err: # TODO also check this error
             error = f"User {username} not found."
-            flash(str(err))
             
         if error is None:
             session.clear()
@@ -61,6 +61,7 @@ def login():
             return redirect(url_for('index'))
         
         flash(error)
+        
     
     return render_template('auth/login.html')
     
@@ -69,6 +70,17 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+    
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = db.one_or_404(
+            db.select(User).where(User.id==user_id)
+        )
 
 def login_required(view):
     @functools.wraps(view)
