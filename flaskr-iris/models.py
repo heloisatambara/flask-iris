@@ -7,8 +7,8 @@ class User(db.Model):
     
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    author_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    created = db.Column(db.Time, nullable=False, server_default=db.text('CURRENT_TIMESTAMP'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    created = db.Column(db.DateTime, nullable=False, server_default=db.text('CURRENT_TIMESTAMP'))
     title = db.Column(db.String(1000), nullable=False)
     body = db.Column(db.String(1000000))
     

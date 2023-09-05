@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, redirect, render_template, request, url_for, session
+    Blueprint, flash, g, redirect, render_template, request, url_for, session
 )
 from werkzeug.exceptions import abort
 from .auth import login_required
@@ -35,7 +35,7 @@ def create():
             post = Post(
                 title=title,
                 body=body,
-                author_id=session['author_id']
+                author_id=g.user.id
             )
             db.session.add(post)
             db.session.commit()

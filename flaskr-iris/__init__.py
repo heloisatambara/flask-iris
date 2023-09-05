@@ -26,14 +26,18 @@ def create_app(test_config=None):
     
     # flask initializes Alchemy with this app
     from .database import db, engine
-    from .models import User
+    from .models import User, Post
     db.init_app(app)
-    # try:
-    # with app.app_context():
-    #     db.drop_all()
-    #     db.create_all()
-    # except DatabaseError:
-    #     print("Database already exists in the destination")
+    try:
+        with app.app_context():
+            db.create_all()
+    except DatabaseError as err:
+        if 'already exists' in err._sql_message():
+            pass
+        else:
+            print(err)
+            
+            
     
     from . import auth
     app.register_blueprint(auth.bp) 
