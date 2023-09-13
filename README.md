@@ -43,3 +43,6 @@ If you have the default configuration, you will have tables called SQLUser.post 
 (STILL ON DEVELOPMENT) Also, you can check out step-by-step how this was developed on  the [Example of Flask application with SQLAlchemy IRIS](https://community.intersystems.com/post/example-of-flask-application-with-sqlalchemy-iris) article.
 
 Feel free to contact me for any doubts!
+
+# TODO:
+Add tests
