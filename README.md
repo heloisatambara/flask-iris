@@ -30,7 +30,16 @@ engine = create_engine("iris://_SYSTEM:sys@localhost:1972/SAMPLE")
 ```
 1. Create your models on flaskr-iris/models.py, according to the [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/models/#defining-models) or [SQLAlchemy](https://docs.sqlalchemy.org/en/20/orm/declarative_tables.html) Docs.
 
-1. Run on debug mode:
+1. Edit your templates in flaskr-iris/templates. I followed the [Flask Tutorial](https://flask.palletsprojects.com/en/2.3.x/tutorial/templates/) for this one, so you can check it for more information. Flask uses the [Jinja template library](https://jinja.palletsprojects.com/en/3.1.x/templates/).
+
+1. Run on debug mode.
 ```
 ...\flask-iris> flask --app flaskr-iris run --debug
 ```
+
+# Additional Information
+If you have the default configuration, you will have tables called SQLUser.post and SQLUser.user on the selected namespace, if you wish to perform any treatment with InterSystems' products. You can find it on Studio on the User folder.
+
+(STILL ON DEVELOPMENT) Also, you can check out step-by-step how this was developed on  the [Example of Flask application with SQLAlchemy IRIS](https://community.intersystems.com/post/example-of-flask-application-with-sqlalchemy-iris) article.
+
+Feel free to contact me for any doubts!
