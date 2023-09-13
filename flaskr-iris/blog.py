@@ -63,7 +63,7 @@ def update(id):
             post.title = title
             post.body = body
             
-            db.commit()
+            db.session.commit()
             
             return redirect(url_for('blog.index'))
     
@@ -76,7 +76,7 @@ def delete(id):
     post = get_post(id)
     
     db.session.delete(post)
-    db.commit()
+    db.session.commit()
     
     return redirect(url_for('blog.index'))
 
@@ -89,7 +89,7 @@ def get_post(id, check_author=True):
     if post is None:
         abort(404, f"Post id {id} doesn't exist.")
         
-    if check_author and post['author_id'] != session['user_id']:
+    if check_author and post.author_id != session['user_id']:
         abort(403)
         
     return post
