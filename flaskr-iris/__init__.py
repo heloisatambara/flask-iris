@@ -33,7 +33,7 @@ def create_app(test_config=None):
             db.create_all()
     except DatabaseError as err:
         if 'already exists' in err._sql_message():
-            pass
+            print("Databases already exist.")
         else:
             print(err)
             
