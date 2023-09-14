@@ -18,11 +18,6 @@ def create_app(test_config=None):
         # load the test config is passed in
         app.config.from_mapping(test_config)
         
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        print("instance folder doesn't exist")
     
     # flask initializes Alchemy with this app
     from .database import db, engine
@@ -37,8 +32,7 @@ def create_app(test_config=None):
         else:
             print(err)
             
-            
-    
+    # register blueprints
     from . import auth
     app.register_blueprint(auth.bp) 
     
