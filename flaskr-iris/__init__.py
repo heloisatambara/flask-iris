@@ -4,18 +4,15 @@ from sqlalchemy.exc import DatabaseError
 
 def create_app():
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__)
     
     app.config.from_mapping(
         SECRET_KEY="dev", # override with random when deploy
         SQLALCHEMY_DATABASE_URI = "iris://_SYSTEM:sys@localhost:1972/SAMPLE"
     )
     
-
-        
-    
     # flask initializes Alchemy with this app
-    from .database import db, engine
+    from .database import db
     from .models import User, Post
     db.init_app(app)
     try:
@@ -25,7 +22,7 @@ def create_app():
         if 'already exists' in err._sql_message():
             print("Databases already exist.")
         else:
-            print(err)
+            print(err) 
             
     # register blueprints
     from . import auth
