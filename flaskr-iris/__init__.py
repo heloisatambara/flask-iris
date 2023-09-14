@@ -11,9 +11,6 @@ def create_app():
         SQLALCHEMY_DATABASE_URI = "iris://_SYSTEM:sys@localhost:1972/SAMPLE"
     )
     
-
-        
-    
     # flask initializes Alchemy with this app
     from .database import db, engine
     from .models import User, Post
