@@ -5,8 +5,8 @@ It follows the [Official Flask Documentation](https://flask.palletsprojects.com/
 # Installation Guide
 (Optionally) Create and activate virtual environment. The following code is an example for Windows.
 ```
-...\flask-iris> python -m venv .venv
-...\flask-iris> .venv/Scripts/activate
+ python -m venv .venv
+ .venv/Scripts/activate
 ```
 
 1. Clone this repository
